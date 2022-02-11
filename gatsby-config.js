@@ -7,6 +7,6 @@
 module.exports = {
   /* Your site config here */
   plugins: [
-    "gatsby-plugin-typegen"
+    "gatsby-plugin-mui-emotion",
   ],
 }
