@@ -8,5 +8,6 @@ module.exports = {
   /* Your site config here */
   plugins: [
     "gatsby-plugin-mui-emotion",
+    "gatsby-plugin-top-layout",
   ],
 }
