@@ -1,5 +1,7 @@
 import React from "react"
 
-export default function Home() {
+const Home: React.VFC = () => {
   return <div>Hello world!</div>
 }
+
+export default Home
