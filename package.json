@@ -20,12 +20,19 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mui/material": "^5.4.1",
     "gatsby": "^4.7.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-helmet": "^6.1.0",
     "skyway-js": "^4.4.3"
   },
   "devDependencies": {
+    "@types/react-helmet": "^6.1.5",
+    "gatsby-plugin-material-ui": "^4.1.0",
+    "gatsby-plugin-react-helmet": "^5.7.0",
     "gatsby-plugin-typegen": "^2.2.4",
     "prettier": "^2.5.1",
     "typescript": "^4.5.5"
