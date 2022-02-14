@@ -25,6 +25,7 @@
     "gatsby": "^4.7.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "sanitize.css": "^13.0.0",
     "skyway-js": "^4.4.3"
   },
   "devDependencies": {
