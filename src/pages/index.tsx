@@ -3,12 +3,14 @@ import React, { useState, useRef, useEffect } from "react";
 import { MediaConnection } from "skyway-js";
 import peer from "../utils/skyway";
 
+let localStream: MediaStream;
+
 const Home: React.VFC = () => {
   const myRef = useRef<HTMLVideoElement>(null);
   const theirRef = useRef<HTMLVideoElement>(null);
   const [peerId, setPeerId] = useState<string>("");
   const [theirId, setTheirId] = useState<string>("");
-  const [localStream, setLocalStream] = useState(new MediaStream());
+  // const [localStream, setLocalStream] = useState(new MediaStream());
   // const [remoteStream, setRemoteStream] = useState(new MediaStream());
 
   useEffect(() => {
@@ -22,10 +24,10 @@ const Home: React.VFC = () => {
         },
       })
       .then((stream) => {
-        setLocalStream(stream);
+        // setLocalStream(stream);
+        localStream = stream;
         if (!myRef.current) return;
         myRef.current.srcObject = stream;
-        myRef.current.play();
       })
       .catch(console.error);
 
@@ -41,7 +43,6 @@ const Home: React.VFC = () => {
     mediaConnection.on("stream", (stream: MediaStream) => {
       if (!theirRef.current) return;
       theirRef.current.srcObject = stream;
-      theirRef.current.play();
     });
   };
 
