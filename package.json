@@ -22,6 +22,7 @@
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "@loadable/component": "^5.15.2",
     "gatsby": "^4.7.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -29,6 +30,7 @@
     "skyway-js": "^4.4.3"
   },
   "devDependencies": {
+    "@types/loadable__component": "^5.13.4",
     "gatsby-plugin-emotion": "^7.7.0",
     "gatsby-plugin-env-variables": "^2.2.0",
     "prettier": "^2.5.1",
