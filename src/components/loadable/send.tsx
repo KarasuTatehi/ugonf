@@ -1,6 +1,6 @@
 import styled from "@emotion/styled"
 import React, { useState, useRef } from "react"
-import { peer } from "../utils/skyway"
+import { peer } from "../../utils/skyway"
 
 type handleChangeType = React.ChangeEventHandler<HTMLInputElement>
 type handleCallType = React.MouseEventHandler<HTMLButtonElement>

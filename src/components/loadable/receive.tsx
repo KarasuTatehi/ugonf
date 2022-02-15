@@ -1,6 +1,6 @@
 import styled from "@emotion/styled"
 import React, { useEffect, useRef, useState } from "react"
-import { peer } from "../utils/skyway"
+import { peer } from "../../utils/skyway"
 
 let localStream: MediaStream
 
