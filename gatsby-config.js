@@ -13,6 +13,5 @@ module.exports = {
   plugins: [
     "gatsby-plugin-emotion",
     "gatsby-plugin-env-variables",
-    "gatsby-plugin-typegen",
   ],
 }
