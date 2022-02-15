@@ -10,8 +10,5 @@ require("dotenv").config({
 
 module.exports = {
   /* Your site config here */
-  plugins: [
-    "gatsby-plugin-emotion",
-    "gatsby-plugin-env-variables",
-  ],
+  plugins: ["gatsby-plugin-emotion", "gatsby-plugin-env-variables"],
 }
