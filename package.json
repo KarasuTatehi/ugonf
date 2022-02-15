@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "gatsby-plugin-emotion": "^7.7.0",
+    "gatsby-plugin-env-variables": "^2.2.0",
     "gatsby-plugin-typegen": "^2.2.4",
     "prettier": "^2.5.1",
     "typescript": "^4.5.5"
