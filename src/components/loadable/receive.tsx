@@ -6,13 +6,14 @@ import { peerOptions } from "../../utils/skyway"
 let localStream: MediaStream
 
 const App: React.VFC = () => {
-  const [peer, setPeer] = useState<Peer>(new Peer(peerOptions))
+  const [peer, setPeer] = useState<Peer>()
   const [peerId, setPeerId] = useState("")
   const listInit = [
-    <option value="null" key={-1}>
+    <option value="null" key={0}>
       null
     </option>,
   ]
+  const [indicator, setIndicator] = useState<"Start" | "Stop">("Start")
   // const [audioInputList, setAudioInputList] = useState<JSX.Element[]>(listInit);
   // const [audioOutputList, setAudioOutputList] = useState<JSX.Element[]>(listInit);
   const [videoInputList, setVideoInputList] = useState<JSX.Element[]>(listInit)
@@ -22,15 +23,30 @@ const App: React.VFC = () => {
   const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
+    if (!peer) return
     peer.on("open", setPeerId)
     peer.on("call", conn => {
       conn.answer(localStream, { videoCodec: "VP9" })
     })
   }, [peer])
 
-  const clickGoStreamBtn: React.MouseEventHandler<HTMLButtonElement> = () => {
-    peer.destroy()
-    setPeer(new Peer(peerId, peerOptions))
+  const clickBtnHandler: React.MouseEventHandler<HTMLButtonElement> = () => {
+    switch (indicator) {
+      case "Start":
+        if (peer) {
+          setPeer(new Peer(peerId, peerOptions))
+        } else {
+          setPeer(new Peer(peerOptions))
+        }
+        setIndicator("Stop")
+        break
+
+      case "Stop":
+        if (!peer) return
+        peer.destroy()
+        setIndicator("Start")
+        break
+    }
   }
 
   useEffect(() => {
@@ -95,22 +111,35 @@ const App: React.VFC = () => {
     changeSelectHandler(ev, setVideoInputDevice)
   }
 
+  type DeviceIdCheck = (str: string) => MediaStreamConstraints
+
   useEffect(() => {
-    const constraints: MediaStreamConstraints = {
-      // audio: {
-      //   deviceId: audioInputDevice,
-      // },
-      audio: false,
-      video: {
-        deviceId: videoInputDevice,
-        frameRate: 30,
-        height: 720,
-        width: 960,
-      },
+    const constraints: DeviceIdCheck = (str) => {
+      switch (str) {
+        case "":
+          return {
+            audio: false,
+            video: false,
+          }
+
+        default:
+          return {
+            // audio: {
+            //   deviceId: audioInputDevice,
+            // },
+            audio: false,
+            video: {
+              deviceId: str,
+              frameRate: 30,
+              height: 720,
+              width: 1280,
+            },
+          }
+      }
     }
 
     navigator.mediaDevices
-      .getUserMedia(constraints)
+      .getUserMedia(constraints(videoInputDevice))
       .then(stream => {
         localStream = stream
         if (!videoRef.current) return
@@ -118,6 +147,10 @@ const App: React.VFC = () => {
       })
       .catch(console.error)
   }, [videoInputDevice])
+
+  const clickTextHandler: React.MouseEventHandler<HTMLInputElement> = ev => {
+    navigator.clipboard.writeText(`${location.href}send/?peerId=${peerId}`)
+  }
 
   return (
     <>
@@ -143,10 +176,16 @@ const App: React.VFC = () => {
         </select>
       </div>
       <div>
-        <span>Peer ID: {peerId}</span>
+        <span>Peer ID: </span>
+        <input
+          onClick={clickTextHandler}
+          readOnly={true}
+          type="text"
+          value={peerId}
+        />
       </div>
       <div>
-        <button onClick={clickGoStreamBtn}>GoStream</button>
+        <button onClick={clickBtnHandler}>{indicator}</button>
       </div>
     </>
   )
@@ -154,7 +193,7 @@ const App: React.VFC = () => {
 
 const Video = styled("video")`
   background-color: #000;
-  width: 960px;
+  width: 1280px;
   height: 720px;
 `
 
