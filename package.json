@@ -6,7 +6,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "repository": "https://github.com/KarasuTatehi/ugonf",
-  "license": "UNLICENCED",
+  "license": "CC BY-SA 4.0",
   "author": "KarasuTatehi <45784893+KarasuTatehi@users.noreply.github.com>",
   "main": "index.js",
   "scripts": {
