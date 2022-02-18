@@ -114,7 +114,7 @@ const App: React.VFC = () => {
   type DeviceIdCheck = (str: string) => MediaStreamConstraints
 
   useEffect(() => {
-    const constraints: DeviceIdCheck = (str) => {
+    const constraints: DeviceIdCheck = str => {
       switch (str) {
         case "":
           return {
