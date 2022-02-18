@@ -18,7 +18,7 @@
 
 ### 映像受信側
 
-1. 「[https://karasutatehi.github.io/ugonf/](https://karasutatehi.github.io/ugonf/send/?peerId=)」の末尾に、[映像送信側](#映像送信側)の「Peer ID」を追加してアクセスします
+1. 「[https://karasutatehi.github.io/ugonf/send/?peerId=](https://karasutatehi.github.io/ugonf/send/?peerId=)」の末尾に、[映像送信側](#映像送信側)の「Peer ID」を追加してアクセスします
 2. [映像送信側](#映像送信側)がカメラを変更した場合、ページを更新する必要があります
 3. [OBS Studio](https://obsproject.com/)や[Streamlabs OBS](https://streamlabs.com/)のブラウザソースとして、配信ソフトウェアに直接取り込むことができます
 
