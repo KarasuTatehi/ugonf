@@ -59,6 +59,7 @@ const App: React.VFC = () => {
 
         devices.forEach((device, index) => {
           const { label, deviceId } = device
+
           const option = (
             <option value={deviceId} key={index}>
               {label}
