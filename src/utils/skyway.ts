@@ -1,8 +1,13 @@
-import Peer from "skyway-js"
+type LogLevel = 0 | 1 | 2 | 3
 
-const peer = new Peer({
+interface PeerOptions {
+  key: string
+  debug: LogLevel
+}
+
+const peerOptions: PeerOptions = {
   key: `${process.env.GATSBY_SKYWAY_API_KEY}`,
   debug: 3,
-})
+}
 
-export { peer }
+export { peerOptions }
