@@ -104,8 +104,8 @@ const App: React.VFC = () => {
       video: {
         deviceId: videoInputDevice,
         frameRate: 30,
-        height: 480,
-        width: 640,
+        height: 720,
+        width: 960,
       },
     }
 
@@ -154,8 +154,8 @@ const App: React.VFC = () => {
 
 const Video = styled("video")`
   background-color: #000;
-  width: 640px;
-  height: 480px;
+  width: 960px;
+  height: 720px;
 `
 
 export default App
