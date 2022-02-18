@@ -10,6 +10,7 @@
 
 1. 「[https://karasutatehi.github.io/ugonf/](https://karasutatehi.github.io/ugonf/)」にアクセスします
 2. ブラウザがカメラの使用許諾を求めてくるので、承諾します
+  - 2022/02/19 補足: ブラウザ設定からカメラの使用許諾を設定する必要があります
 3. 一度ページを更新します
 4. 「Video Input」で映像を共有するカメラを選択します
 5. 「Go Stream」をクリックしてカメラ映像の送信を開始します
