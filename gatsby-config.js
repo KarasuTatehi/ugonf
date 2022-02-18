@@ -10,5 +10,6 @@ require("dotenv").config({
 
 module.exports = {
   /* Your site config here */
+  pathPrefix: "/ugonf",
   plugins: ["gatsby-plugin-emotion", "gatsby-plugin-env-variables"],
 }
