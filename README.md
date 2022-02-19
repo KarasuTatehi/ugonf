@@ -10,25 +10,31 @@
 
 1. 「[https://karasutatehi.github.io/ugonf/](https://karasutatehi.github.io/ugonf/)」にアクセスします
 2. ブラウザがカメラの使用許諾を求めてくるので、承諾します
-  - 2022/02/19 補足: ブラウザ設定からカメラの使用許諾を設定する必要があります
 3. 一度ページを更新します
 4. 「Video Input」で映像を共有するカメラを選択します
-5. 「Go Stream」をクリックしてカメラ映像の送信を開始します
-6. 「Peer ID」を[映像受信側](#映像受信側)に伝えてください
-7. 映像を共有するカメラを変更したい場合は「Video Input」から選択し、「Go Stream」をクリックして Peer を更新します
+5. 「STart」「Stop」をクリックしてカメラ映像の送信を開始・停止できます
+6. 「Peer ID」を[映像受信側](#映像受信側)のリンクを取得できます
+
+- 映像を共有するカメラを変更したい場合は「Video Input」から選択し、「Go Stream」をクリックして Peer を更新します
+- ブラウザ設定からカメラの使用許諾を設定する必要があります（2022/02/19現在）
 
 ### 映像受信側
 
 1. 「[https://karasutatehi.github.io/ugonf/send/?peerId=](https://karasutatehi.github.io/ugonf/send/?peerId=)」の末尾に、[映像送信側](#映像送信側)の「Peer ID」を追加してアクセスします
-2. [映像送信側](#映像送信側)がカメラを変更した場合、ページを更新する必要があります
-3. [OBS Studio](https://obsproject.com/)や[Streamlabs OBS](https://streamlabs.com/)のブラウザソースとして、配信ソフトウェアに直接取り込むことができます
+2. [OBS Studio](https://obsproject.com/)や[Streamlabs OBS](https://streamlabs.com/)のブラウザソースとして、配信ソフトウェアに直接取り込むことができます
 
-### 規格
+- [映像送信側](#映像送信側)がカメラを変更した場合、ページを更新する必要があります
+
+## 規格
 
 - 映像
-  - 解像度: 960x720
+  - 解像度: 1280x720
   - フレームレート: 30FPS
   - ビデオコーデック: VP9
+
+## 動作環境
+
+[SkyWayのFAQ](https://support.skyway.io/hc/ja/articles/115015688708)をご確認ください。
 
 ## クレジット
 
