@@ -13,15 +13,14 @@
 3. 一度ページを更新します
 4. 「Video Input」で映像を共有するカメラを選択します
 5. 「STart」「Stop」をクリックしてカメラ映像の送信を開始・停止できます
-6. 「Peer ID」を[映像受信側](#映像受信側)のリンクを取得できます
+6. 「Peer ID」をクリックして[映像受信側](#映像受信側)のリンクを取得できます
 
 - 映像を共有するカメラを変更したい場合は「Video Input」から選択し、「Go Stream」をクリックして Peer を更新します
 - ブラウザ設定からカメラの使用許諾を設定する必要があります（2022/02/19現在）
 
 ### 映像受信側
 
-1. 「[https://karasutatehi.github.io/ugonf/send/?peerId=](https://karasutatehi.github.io/ugonf/send/?peerId=)」の末尾に、[映像送信側](#映像送信側)の「Peer ID」を追加してアクセスします
-2. [OBS Studio](https://obsproject.com/)や[Streamlabs OBS](https://streamlabs.com/)のブラウザソースとして、配信ソフトウェアに直接取り込むことができます
+1. [映像送信側](#映像送信側)から受け取ったリンクを使って、[OBS Studio](https://obsproject.com/)や[Streamlabs OBS](https://streamlabs.com/)のブラウザソースとして、配信ソフトウェアに直接取り込むことができます
 
 - [映像送信側](#映像送信側)がカメラを変更した場合、ページを更新する必要があります
 
