@@ -1,13 +1,11 @@
-type LogLevel = 0 | 1 | 2 | 3
+import { CallOption, PeerConstructorOption } from "skyway-js"
 
-interface PeerOptions {
-  key: string
-  debug: LogLevel
-}
-
-const peerOptions: PeerOptions = {
-  key: `${process.env.GATSBY_SKYWAY_API_KEY}`,
+export const peerConstructor: PeerConstructorOption = {
+  key: `${process.env.REACT_APP_SKYWAY_API_KEY}`,
   debug: 3,
 }
 
-export { peerOptions }
+export const callOption: CallOption = {
+  audioCodec: "opus",
+  videoCodec: "VP9",
+}
