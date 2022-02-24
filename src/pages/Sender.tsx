@@ -1,8 +1,8 @@
 import styled from "@emotion/styled"
-import React, { useCallback, useEffect, useReducer, useRef } from "react"
+import { useReducer, useEffect, useRef, useCallback } from "react"
 import { useLocation } from "react-use"
 import Peer from "skyway-js"
-import { callOption, peerConstructor } from "../utils/skyway"
+import { peerConstructor, callOption } from "../utils/skyway"
 
 type State = {
   devices: MediaDeviceInfo[]
@@ -10,6 +10,7 @@ type State = {
   selectedVideoDevice: string
   localPeerId: string
   sending: "Start" | "Stop"
+  receiverUrl: string
 }
 
 type Action =
@@ -33,6 +34,10 @@ type Action =
       type: "setSending"
       payload: "Start" | "Stop"
     }
+  | {
+      type: "setReceiverUrl"
+      payload: string
+    }
 
 const initState: State = {
   devices: [],
@@ -40,6 +45,7 @@ const initState: State = {
   selectedVideoDevice: "",
   localPeerId: "",
   sending: "Start",
+  receiverUrl: "",
 }
 
 const reducer = (state: State, action: Action) => {
@@ -72,6 +78,12 @@ const reducer = (state: State, action: Action) => {
       return {
         ...state,
         sending: action.payload,
+      }
+
+    case "setReceiverUrl":
+      return {
+        ...state,
+        receiverUrl: action.payload,
       }
   }
 }
@@ -148,6 +160,29 @@ const Sender: React.VFC = () => {
   }
 
   const peerRef = useRef<Peer>()
+  const location = useLocation()
+  useEffect(() => {
+    peerRef.current = new Peer(peerConstructor)
+    peerRef.current.on("open", peerId => {
+      switch (process.env.NODE_ENV) {
+        case "development":
+          dispatch({
+            type: "setReceiverUrl",
+            payload: `${location.protocol}//${location.host}/receiver/${peerId}`,
+          })
+          break
+
+        case "production":
+          dispatch({
+            type: "setReceiverUrl",
+            payload: `${location.protocol}//${location.host}/ugonf/receiver/${peerId}`,
+          })
+          break
+      }
+      dispatch({ type: "setLocalPeerId", payload: peerId })
+    })
+    peerRef.current.destroy()
+  }, [location.host, location.protocol])
   useEffect(() => {
     switch (state.sending) {
       case "Start":
@@ -156,27 +191,15 @@ const Sender: React.VFC = () => {
         break
 
       case "Stop":
-        if (peerRef.current) return
-        if (state.localPeerId) {
-          peerRef.current = new Peer(state.localPeerId, peerConstructor)
-        } else {
-          peerRef.current = new Peer(peerConstructor)
-        }
-        peerRef.current.on("open", peerId => {
-          dispatch({ type: "setLocalPeerId", payload: peerId })
-        })
-        peerRef.current.on("call", conn => {
-          conn.answer(localStreamRef.current, callOption)
-        })
+        peerRef.current = new Peer(state.localPeerId, peerConstructor)
+        break
     }
-  }, [state.sending, state.localPeerId, setLocalStream])
-
-  const { protocol, hostname, port } = useLocation()
-  const url = `${protocol}//${hostname}${port ? ":" + port : ""}/receiver/${
-    state.localPeerId
-  }`
+    peerRef.current.on("call", conn => {
+      conn.answer(localStreamRef.current, callOption)
+    })
+  }, [state.localPeerId, state.sending])
   const clickCopyBtn = () => {
-    navigator.clipboard.writeText(url)
+    navigator.clipboard.writeText(state.receiverUrl)
   }
 
   return (
@@ -226,7 +249,7 @@ const Sender: React.VFC = () => {
       </div>
       <div>
         <span>Receiver URL: </span>
-        <span>{url} </span>
+        <span>{state.receiverUrl} </span>
         <button onClick={clickCopyBtn}>Copy</button>
       </div>
     </>
