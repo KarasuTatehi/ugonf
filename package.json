@@ -1,7 +1,7 @@
 {
   "name": "ugonf",
   "version": "1.0.0-rc4",
-  "homepage": "https://karasutatehi.github.io/ugonf/",
+  "homepage": "https://karasutatehi.github.io/ugonf",
   "scripts": {
     "build": "react-scripts build",
     "deploy": "yarn format && yarn typecheck && yarn build && gh-pages -d build",
