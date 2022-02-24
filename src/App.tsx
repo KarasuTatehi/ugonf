@@ -6,7 +6,7 @@ import Sender from "./pages/Sender"
 
 const App: React.VFC = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route element={<Home />} index />
         <Route element={<Receiver />} path="/receiver" />
