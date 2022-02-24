@@ -9,14 +9,15 @@
 ### 映像送信側
 
 1. 「[https://karasutatehi.github.io/ugonf/](https://karasutatehi.github.io/ugonf/)」にアクセスします
-2. ブラウザがカメラの使用許諾を求めてくるので、承諾します
-3. 一度ページを更新します
-4. 「Video Input」で映像を共有するカメラを選択します
-5. 「STart」「Stop」をクリックしてカメラ映像の送信を開始・停止できます
-6. 「Peer ID」をクリックして[映像受信側](#映像受信側)のリンクを取得できます
+2. ブラウザがデバイスの使用許諾を求めてくるので、承諾します
+3. 「Let's Sending」をクリックして設定画面に移動します
+4. 「Video Input」で送信するデバイスソースを選択します
+5. 「Sending」の「Start」「Stop」をクリックしてデバイスソースの送信を開始・停止できます
+6. 「Receiver URL」の「Copy」をクリックして[映像受信側](#映像受信側)のリンクを取得できます
 
-- 映像を共有するカメラを変更したい場合は「Video Input」から選択し、「Go Stream」をクリックして Peer を更新します
-- ブラウザ設定からカメラの使用許諾を設定する必要があります（2022/02/19現在）
+- 映像を共有するデバイスを変更したい場合
+  1. 「Video Input」で送信するデバイスソースを選択します
+  2. 「Sending」の「Stop」「Start」をクリックして映像を更新できます
 
 ### 映像受信側
 
@@ -33,7 +34,7 @@
 
 ## 動作環境
 
-[SkyWayのFAQ](https://support.skyway.io/hc/ja/articles/115015688708)をご確認ください。
+[SkyWay の FAQ](https://support.skyway.io/hc/ja/articles/115015688708)をご確認ください。
 
 ## クレジット
 

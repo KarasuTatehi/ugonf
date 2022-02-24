@@ -1,47 +1,57 @@
 {
   "name": "ugonf",
-  "version": "1.0.0-rc.3",
-  "private": true,
-  "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
-  },
-  "repository": "https://github.com/KarasuTatehi/ugonf",
-  "license": "CC BY-SA 4.0",
-  "author": "KarasuTatehi <45784893+KarasuTatehi@users.noreply.github.com>",
-  "main": "index.js",
+  "version": "1.0.0-rc4",
+  "homepage": "https://karasutatehi.github.io/ugonf/",
   "scripts": {
-    "build": "gatsby build",
-    "clean": "gatsby clean",
-    "deploy": "yarn format && yarn typecheck && yarn clean && yarn build --prefix-paths && gh-pages -d public",
-    "develop": "gatsby develop",
+    "build": "react-scripts build",
+    "deploy": "yarn format && yarn typecheck && yarn build && gh-pages -d build",
+    "eject": "react-scripts eject",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
-    "serve": "gatsby serve",
-    "start": "gatsby develop",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
+    "start": "react-scripts start",
+    "test": "react-scripts test",
     "typecheck": "tsc"
   },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
   "dependencies": {
-    "@emotion/react": "^11.7.1",
-    "@emotion/styled": "^11.6.0",
-    "@loadable/component": "^5.15.2",
-    "@reach/router": "^1.3.4",
-    "gatsby": "^4.7.1",
-    "query-string": "^7.1.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "@emotion/react": "^11.8.1",
+    "@emotion/styled": "^11.8.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^6.2.1",
+    "react-use": "^17.3.2",
     "sanitize.css": "^13.0.0",
     "skyway-js": "^4.4.3"
   },
   "devDependencies": {
-    "@types/loadable__component": "^5.13.4",
-    "@types/reach__router": "^1.3.10",
-    "gatsby-plugin-emotion": "^7.7.0",
-    "gatsby-plugin-env-variables": "^2.2.0",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.13",
+    "@types/react": "^17.0.20",
+    "@types/react-dom": "^17.0.9",
+    "@types/react-router-dom": "^5.3.3",
     "gh-pages": "^3.2.3",
     "prettier": "^2.5.1",
-    "typescript": "^4.5.5"
-  },
-  "volta": {
-    "node": "16.14.0"
+    "react-scripts": "5.0.0",
+    "typescript": "^4.4.2",
+    "web-vitals": "^2.1.0"
   }
 }
