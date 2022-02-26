@@ -91,7 +91,7 @@ const reducer = (state: State, action: Action) => {
 const Sender: React.VFC = () => {
   const [state, dispatch] = useReducer(reducer, initState)
   useEffect(() => {
-    navigator.mediaDevices.enumerateDevices().then(devices => {
+    navigator.mediaDevices.enumerateDevices().then((devices) => {
       dispatch({ type: "setDevices", payload: devices })
     })
   }, [])
@@ -163,7 +163,7 @@ const Sender: React.VFC = () => {
   const location = useLocation()
   useEffect(() => {
     peerRef.current = new Peer(peerConstructor)
-    peerRef.current.on("open", peerId => {
+    peerRef.current.on("open", (peerId) => {
       switch (process.env.NODE_ENV) {
         case "development":
           dispatch({
@@ -194,7 +194,7 @@ const Sender: React.VFC = () => {
         peerRef.current = new Peer(state.localPeerId, peerConstructor)
         break
     }
-    peerRef.current.on("call", conn => {
+    peerRef.current.on("call", (conn) => {
       conn.answer(localStreamRef.current, callOption)
     })
   }, [state.localPeerId, state.sending])
@@ -214,7 +214,7 @@ const Sender: React.VFC = () => {
             --------------------------------------------------
           </option>
           {state.devices
-            .filter(device => device.kind === "audioinput")
+            .filter((device) => device.kind === "audioinput")
             .map((device, index) => (
               <option key={index} value={device.deviceId}>
                 {device.label}
@@ -229,7 +229,7 @@ const Sender: React.VFC = () => {
             --------------------------------------------------
           </option>
           {state.devices
-            .filter(device => device.kind === "videoinput")
+            .filter((device) => device.kind === "videoinput")
             .map((device, index) => (
               <option key={index} value={device.deviceId}>
                 {device.label}

@@ -21,7 +21,7 @@ const Receiver: React.VFC = () => {
         undefined,
         callOption
       )
-      call.on("stream", stream => {
+      call.on("stream", (stream) => {
         if (!remoteVideoRef.current) return
         remoteVideoRef.current.srcObject = stream
       })
