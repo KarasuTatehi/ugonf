@@ -6,11 +6,7 @@ const Home: React.VFC = () => {
     navigator.mediaDevices.getUserMedia({ audio: true, video: true })
   }, [])
 
-  return (
-    <>
-      <Link to="/sender">Let's Sending</Link>
-    </>
-  )
+  return <Link to="/sender">Let's Sending</Link>
 }
 
 export default Home
