@@ -2,7 +2,7 @@ import styled from "@emotion/styled"
 import { useReducer, useEffect, useRef, useCallback } from "react"
 import { useLocation } from "react-use"
 import Peer from "skyway-js"
-import { peerConstructor, callOption } from "../utils/skyway"
+import { peerConstructor, answerOption } from "../utils/skyway"
 
 type State = {
   devices: MediaDeviceInfo[]
@@ -96,9 +96,7 @@ const Sender: React.VFC = () => {
     })
   }, [])
 
-  const changeDevicesOptionHandler = (
-    ev: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const changeDevicesOptionHandler = (ev: React.ChangeEvent<HTMLSelectElement>) => {
     switch (ev.target.name) {
       case "audioinput":
         return dispatch({
@@ -134,9 +132,7 @@ const Sender: React.VFC = () => {
         : false,
     }
     try {
-      localStreamRef.current = await navigator.mediaDevices.getUserMedia(
-        constraints
-      )
+      localStreamRef.current = await navigator.mediaDevices.getUserMedia(constraints)
       localVideoRef.current.srcObject = localStreamRef.current
     } catch {
       localStreamRef.current = new MediaStream()
@@ -195,7 +191,7 @@ const Sender: React.VFC = () => {
         break
     }
     peerRef.current.on("call", (conn) => {
-      conn.answer(localStreamRef.current, callOption)
+      conn.answer(localStreamRef.current, answerOption)
     })
   }, [state.localPeerId, state.sending])
   const clickCopyBtn = () => {
@@ -210,9 +206,7 @@ const Sender: React.VFC = () => {
       <div>
         <span>Audio: </span>
         <select name="audioinput" onChange={changeDevicesOptionHandler}>
-          <option value="">
-            --------------------------------------------------
-          </option>
+          <option value="">--------------------------------------------------</option>
           {state.devices
             .filter((device) => device.kind === "audioinput")
             .map((device, index) => (
@@ -225,9 +219,7 @@ const Sender: React.VFC = () => {
       <div>
         <span>Video: </span>
         <select name="videoinput" onChange={changeDevicesOptionHandler}>
-          <option value="">
-            --------------------------------------------------
-          </option>
+          <option value="">--------------------------------------------------</option>
           {state.devices
             .filter((device) => device.kind === "videoinput")
             .map((device, index) => (
