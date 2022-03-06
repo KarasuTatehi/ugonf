@@ -8,6 +8,8 @@ type State = {
   devices: MediaDeviceInfo[]
   selectedAudioDevice: string
   selectedVideoDevice: string
+  localStreamId?: string
+  localStreamActivity?: boolean
   localPeerId: string
   sending: "Start" | "Stop"
   receiverUrl: string
@@ -25,6 +27,14 @@ type Action =
   | {
       type: "setSelectedAudioDevice"
       payload: string
+    }
+  | {
+      type: "setLocalStreamId"
+      payload: string
+    }
+  | {
+      type: "setLocalStreamActivity"
+      payload: boolean
     }
   | {
       type: "setLocalPeerId"
@@ -50,6 +60,18 @@ const initState: State = {
 
 const reducer = (state: State, action: Action) => {
   switch (action.type) {
+    case "setLocalStreamId":
+      return {
+        ...state,
+        localStreamId: action.payload,
+      }
+
+    case "setLocalStreamActivity":
+      return {
+        ...state,
+        localStreamActivity: action.payload,
+      }
+
     case "setDevices":
       return {
         ...state,
@@ -134,9 +156,13 @@ const Sender: React.VFC = () => {
     try {
       localStreamRef.current = await navigator.mediaDevices.getUserMedia(constraints)
       localVideoRef.current.srcObject = localStreamRef.current
+      dispatch({ type: "setLocalStreamId", payload: localStreamRef.current.id })
+      dispatch({ type: "setLocalStreamActivity", payload: localStreamRef.current.active })
     } catch {
       localStreamRef.current = new MediaStream()
       localVideoRef.current.srcObject = localStreamRef.current
+      dispatch({ type: "setLocalStreamId", payload: localStreamRef.current.id })
+      dispatch({ type: "setLocalStreamActivity", payload: localStreamRef.current.active })
     }
   }, [state.selectedAudioDevice, state.selectedVideoDevice])
   useEffect(() => {
@@ -232,7 +258,7 @@ const Sender: React.VFC = () => {
       <div>
         <span>LocalStream ID: </span>
         <span>
-          {localStreamRef.current?.id} ({`${localStreamRef.current?.active}`})
+          {state.localStreamId} ({`${state.localStreamActivity}`})
         </span>
       </div>
       <div>
