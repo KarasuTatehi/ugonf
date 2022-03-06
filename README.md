@@ -1,23 +1,52 @@
 # ugonf
 
-**ugonf**（ユゴンフ）は、[WebRTC](https://webrtc.org/)を利用した P2P 方式のカメラ映像共有アプリです。
+**ugonf**（ユゴンフ）は、[WebRTC](https://webrtc.org/)を利用した、P2P 方式の映像共有アプリです。
 
-市販の Web カメラはもちろん、[VTube Studio](https://store.steampowered.com/app/1325860/VTube_Studio/)、[Animaze](https://store.steampowered.com/app/1364390/Animaze_by_FaceRig/)、[OBS Studio](https://obsproject.com/)、[Streamlabs OBS](https://streamlabs.com/)などで提供されている仮想カメラにも対応しています。
+## 仕様
+
+### 共通
+
+- 音声
+  - コーデック: opus
+- 映像
+  - 解像度: 1280x720
+  - フレームレート: 30FPS
+  - コーデック: VP9
+
+### Media
+
+- 対応機材
+  - Web カメラ
+  - 仮想カメラ
+    - [VTube Studio](https://store.steampowered.com/app/1325860/VTube_Studio/)
+    - [Animaze](https://store.steampowered.com/app/1364390/Animaze_by_FaceRig/)
+    - [OBS Studio](https://obsproject.com/)
+    - [Streamlabs OBS](https://streamlabs.com/)
+  - キャプチャーボード
+
+### Display
+
+- 範囲
+  - モニター
+  - ウィンドウ
+  - ブラウザタブ
 
 ## 使い方
 
-### 映像送信側
+### 映像送信側 ()
 
 1. 「[https://karasutatehi.github.io/ugonf/](https://karasutatehi.github.io/ugonf/)」にアクセスします
 2. ブラウザがデバイスの使用許諾を求めてくるので、承諾します
-3. 「Let's Sending」をクリックして設定画面に移動します
-4. 「Video Input」で送信するデバイスソースを選択します
-5. 「Sending」の「Start」「Stop」をクリックしてデバイスソースの送信を開始・停止できます
-6. 「Receiver URL」の「Copy」をクリックして[映像受信側](#映像受信側)のリンクを取得できます
+3. `Sending Type`の`Media`または`Display`をクリックして設定画面に移動します
+4. `Sending Type`ごとに設定を行います
+   - `Media`の場合: `Audio Input` & `Video Input` で送信するデバイスを選択します
+   - `Display`の場合: `Input` をクリックして送信する範囲を選択します
+5. `Sending` の `Start` OR `Stop` をクリックしてデバイスソースの送信を開始・停止できます
+6. `Receiver URL` の `Copy` をクリックして[映像受信側](#映像受信側)のリンクを取得できます
 
 - 映像を共有するデバイスを変更したい場合
-  1. 「Video Input」で送信するデバイスソースを選択します
-  2. 「Sending」の「Stop」「Start」をクリックして映像を更新できます
+  1. 送信するデバイスソース・範囲を選択します
+  2. `Sending` の `Start` OR `Stop` をクリックして映像を更新できます
 
 ### 映像受信側
 
