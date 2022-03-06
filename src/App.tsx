@@ -3,8 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { Helmet } from "react-helmet"
 import Home from "./pages/Home"
 import Receiver from "./pages/Receiver"
-import Sender from "./pages/Sender"
-import WindowSender from "./pages/WindowSender"
+import MediaSender from "./pages/MediaSender"
+import DisplaySender from "./pages/DisplaySender"
 
 const App: React.VFC = () => {
   const [baseName, setBaseName] = useState<string>("")
@@ -30,8 +30,8 @@ const App: React.VFC = () => {
           <Route element={<Home />} index />
           <Route element={<Receiver />} path="/receiver" />
           <Route element={<Receiver />} path="/receiver/:remotePeerId" />
-          <Route element={<Sender />} path="/sender" />
-          <Route element={<WindowSender />} path="/window-sender" />
+          <Route element={<MediaSender />} path="/sender/media" />
+          <Route element={<DisplaySender />} path="/sender/display" />
         </Routes>
       </BrowserRouter>
     </>
