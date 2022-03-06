@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet"
 import Home from "./pages/Home"
 import Receiver from "./pages/Receiver"
 import Sender from "./pages/Sender"
+import WindowSender from "./pages/WindowSender"
 
 const App: React.VFC = () => {
   const [baseName, setBaseName] = useState<string>("")
@@ -30,6 +31,7 @@ const App: React.VFC = () => {
           <Route element={<Receiver />} path="/receiver" />
           <Route element={<Receiver />} path="/receiver/:remotePeerId" />
           <Route element={<Sender />} path="/sender" />
+          <Route element={<WindowSender />} path="/window-sender" />
         </Routes>
       </BrowserRouter>
     </>
