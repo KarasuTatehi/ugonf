@@ -82,7 +82,7 @@ const DisplaySender: React.VFC = () => {
   const setLocalStream = useCallback(async () => {
     if (!localVideoRef.current) return
     const constraints = {
-      audio: true,
+      audio: false,
       video: {
         frameRate: 30,
         height: 720,

@@ -229,7 +229,7 @@ const MediaSender: React.VFC = () => {
       <div>
         <Video autoPlay muted playsInline ref={localVideoRef} />
       </div>
-      <div>
+      {/* <div>
         <span>Audio: </span>
         <select name="audioinput" onChange={changeDevicesOptionHandler}>
           <option value="">--------------------------------------------------</option>
@@ -241,7 +241,7 @@ const MediaSender: React.VFC = () => {
               </option>
             ))}
         </select>
-      </div>
+      </div> */}
       <div>
         <span>Video: </span>
         <select name="videoinput" onChange={changeDevicesOptionHandler}>
