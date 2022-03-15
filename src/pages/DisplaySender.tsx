@@ -159,28 +159,38 @@ const DisplaySender: React.VFC = () => {
 
   return (
     <>
-      <div>
+      <fieldset>
+        <legend>Local Stream</legend>
         <Video autoPlay muted playsInline ref={localVideoRef} />
-      </div>
-      <div>
-        <span>Input: </span>
-        <button onClick={setLocalStream}>Select</button>
-      </div>
-      <div>
-        <span>LocalStream ID: </span>
-        <span>
-          {state.localStreamId} ({`${state.localStreamActivity}`})
-        </span>
-      </div>
-      <div>
-        <span>Sending: </span>
-        <button onClick={clickSendingBtn}>{state.sending}</button>
-      </div>
-      <div>
-        <span>Receiver URL: </span>
-        <span>{state.receiverUrl} </span>
-        <button onClick={clickCopyBtn}>Copy</button>
-      </div>
+        <hr />
+        <div>
+          <span>ID: </span>
+          <span>{state.localStreamId}</span>
+        </div>
+        <div>
+          <span>Activity: </span>
+          <span>{state.localStreamActivity}</span>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Display</legend>
+        <div>
+          <span>Input: </span>
+          <button onClick={setLocalStream}>Select</button>
+        </div>
+        <div>
+          <span>Sending: </span>
+          <button onClick={clickSendingBtn}>{state.sending}</button>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Receiver</legend>
+        <div>
+          <span>URL: </span>
+          <span>{state.receiverUrl} </span>
+          <button onClick={clickCopyBtn}>Copy</button>
+        </div>
+      </fieldset>
     </>
   )
 }

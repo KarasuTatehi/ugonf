@@ -226,50 +226,62 @@ const MediaSender: React.VFC = () => {
 
   return (
     <>
-      <div>
-        <Video autoPlay muted playsInline ref={localVideoRef} />
-      </div>
-      {/* <div>
-        <span>Audio: </span>
-        <select name="audioinput" onChange={changeDevicesOptionHandler}>
-          <option value="">--------------------------------------------------</option>
-          {state.devices
-            .filter((device) => device.kind === "audioinput")
-            .map((device, index) => (
-              <option key={index} value={device.deviceId}>
-                {device.label}
-              </option>
-            ))}
-        </select>
-      </div> */}
-      <div>
-        <span>Video: </span>
-        <select name="videoinput" onChange={changeDevicesOptionHandler}>
-          <option value="">--------------------------------------------------</option>
-          {state.devices
-            .filter((device) => device.kind === "videoinput")
-            .map((device, index) => (
-              <option key={index} value={device.deviceId}>
-                {device.label}
-              </option>
-            ))}
-        </select>
-      </div>
-      <div>
-        <span>LocalStream ID: </span>
-        <span>
-          {state.localStreamId} ({`${state.localStreamActivity}`})
-        </span>
-      </div>
-      <div>
-        <span>Sending: </span>
-        <button onClick={clickSendingBtn}>{state.sending}</button>
-      </div>
-      <div>
-        <span>Receiver URL: </span>
-        <span>{state.receiverUrl} </span>
-        <button onClick={clickCopyBtn}>Copy</button>
-      </div>
+      <fieldset>
+        <legend>Local Stream</legend>
+        <div>
+          <Video autoPlay muted playsInline ref={localVideoRef} />
+        </div>
+        <hr />
+        <div>
+          <span>ID: </span>
+          <span>{state.localStreamId}</span>
+        </div>
+        <div>
+          <span>Activity: </span>
+          <span>{state.localStreamActivity}</span>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Input</legend>
+        {/* <div>
+          <span>Audio: </span>
+          <select name="audioinput" onChange={changeDevicesOptionHandler}>
+            <option value="">--------------------------------------------------</option>
+            {state.devices
+              .filter((device) => device.kind === "audioinput")
+              .map((device, index) => (
+                <option key={index} value={device.deviceId}>
+                  {device.label}
+                </option>
+              ))}
+          </select>
+        </div> */}
+        <div>
+          <span>Video: </span>
+          <select name="videoinput" onChange={changeDevicesOptionHandler}>
+            <option value="">--------------------------------------------------</option>
+            {state.devices
+              .filter((device) => device.kind === "videoinput")
+              .map((device, index) => (
+                <option key={index} value={device.deviceId}>
+                  {device.label}
+                </option>
+              ))}
+          </select>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Receiver</legend>
+        <div>
+          <span>URL: </span>
+          <span>{state.receiverUrl} </span>
+          <button onClick={clickCopyBtn}>Copy</button>
+        </div>
+        <div>
+          <span>Sending: </span>
+          <button onClick={clickSendingBtn}>{state.sending}</button>
+        </div>
+      </fieldset>
     </>
   )
 }
