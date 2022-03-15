@@ -1,5 +1,7 @@
 # ugonf
 
+![ugonf](./public/thumbnail.png)
+
 **ugonf**（ユゴンフ）は、[WebRTC](https://webrtc.org/)を利用した、P2P 方式の映像共有アプリです。
 
 ## 仕様
@@ -39,7 +41,7 @@
 2. ブラウザがデバイスの使用許諾を求めてくるので、承諾します
 3. `Sending Type`の`Media`または`Display`をクリックして設定画面に移動します
 4. `Sending Type`ごとに設定を行います
-   - `Media`の場合: `Audio Input` & `Video Input` で送信するデバイスを選択します
+   - `Media`の場合: `Video` で送信するデバイスを選択します
    - `Display`の場合: `Input` をクリックして送信する範囲を選択します
 5. `Sending` の `Start` OR `Stop` をクリックしてデバイスソースの送信を開始・停止できます
 6. `Receiver URL` の `Copy` をクリックして[映像受信側](#映像受信側)のリンクを取得できます
@@ -71,6 +73,8 @@
   - [KarasuTatehi](https://github.com/KarasuTatehi) - [Discord](https://discord.com/invite/AQWkzRCF5W) / [Twitch](https://www.twitch.tv/karasutatehi) / [Twitter](https://twitter.com/KarasuTatehi) / [YouTube](https://www.youtube.com/channel/UCN5Hd3p1cKdvWmoifnVK9oA) / [公式 HP](https://virtual-circle-aurora.github.io/talents/karasu-tatehi)
   - YØT from 81NO - [Twitter](https://twitter.com/SandR_YOT)
   - [AmenoAtsuta](https://github.com/AmenoAtsuta) - [Twitter](https://twitter.com/AmenoAtsuta) / [YouTube](https://www.youtube.com/channel/UCcNBKvsZBMPMJTwNaraELHg)
+- ファビコン
+  - masa_king - [coconala](https://coconala.com/users/239060)
 - 発注
   - 喫茶ユゴス - [Twitter](https://twitter.com/cafeyuggoth) / [YouTube](https://www.youtube.com/channel/UC778fxfe9aXazW0AXLyOIpg) / [公式 HP](https://w.atwiki.jp/cafe-yuggoth/)
     - 宮古ミーゴ - [Twitter](https://twitter.com/Cutoluruhu_migo) / [YouTube](https://www.youtube.com/channel/UCCwedbOIXxubr7_d2-7bM3g)
