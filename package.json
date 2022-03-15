@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "homepage": "https://karasutatehi.github.io/ugonf",
   "scripts": {
-    "build": "react-scripts build",
+    "build": "rm -rf build && react-scripts build",
     "deploy": "gh-pages -d build",
     "eject": "react-scripts eject",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
