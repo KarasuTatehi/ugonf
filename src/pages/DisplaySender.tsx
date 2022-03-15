@@ -161,7 +161,9 @@ const DisplaySender: React.VFC = () => {
     <>
       <fieldset>
         <legend>Local Stream</legend>
-        <Video autoPlay muted playsInline ref={localVideoRef} />
+        <div>
+          <Video width={1280} height={720} autoPlay muted playsInline ref={localVideoRef} />
+        </div>
         <hr />
         <div>
           <span>ID: </span>
@@ -196,10 +198,7 @@ const DisplaySender: React.VFC = () => {
 }
 
 const Video = styled("video")`
-  display: block;
   background-color: #000;
-  width: 100%;
-  height: 720px;
 `
 
 export default DisplaySender
