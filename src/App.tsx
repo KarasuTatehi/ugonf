@@ -29,7 +29,7 @@ const App: React.VFC = () => {
         <Routes>
           <Route element={<Home />} index />
           <Route element={<Receiver />} path="/receiver" />
-          <Route element={<Receiver />} path="/receiver/:remotePeerId" />
+          <Route element={<Receiver />} path="/receiver/:key/:to" />
           <Route element={<MediaSender />} path="/sender/media" />
           <Route element={<DisplaySender />} path="/sender/display" />
         </Routes>

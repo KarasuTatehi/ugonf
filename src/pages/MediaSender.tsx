@@ -1,293 +1,108 @@
-import styled from "@emotion/styled"
-import { useReducer, useEffect, useRef, useCallback } from "react"
-import { useLocation } from "react-use"
+import React, { useReducer, createContext } from "react"
 import Peer from "skyway-js"
-import { peerConstructor, answerOption } from "../utils/skyway"
+import LocalStream from "../components/MediaSender/LocalStream"
+import Skyway from "../components/MediaSender/Skyway"
 
 type State = {
+  audioDevice: string
   devices: MediaDeviceInfo[]
-  selectedAudioDevice: string
-  selectedVideoDevice: string
-  localStreamId?: string
-  localStreamActivity?: boolean
-  localPeerId: string
-  sending: "Start" | "Stop"
-  receiverUrl: string
+  key: string
+  localStream: MediaStream
+  peer: Peer | null
+  peerId: string
+  url: string
+  videoDevice: string
 }
 
 type Action =
+  | {
+      type: "setAudioDevice"
+      payload: string
+    }
   | {
       type: "setDevices"
       payload: MediaDeviceInfo[]
     }
   | {
-      type: "setSelectedVideoDevice"
+      type: "setKey"
       payload: string
     }
   | {
-      type: "setSelectedAudioDevice"
+      type: "setLocalStream"
+      payload: MediaStream
+    }
+  | {
+      type: "setPeer"
+      payload: Peer | null
+    }
+  | {
+      type: "setPeerId"
       payload: string
     }
   | {
-      type: "setLocalStreamId"
+      type: "setUrl"
       payload: string
     }
   | {
-      type: "setLocalStreamActivity"
-      payload: boolean
-    }
-  | {
-      type: "setLocalPeerId"
-      payload: string
-    }
-  | {
-      type: "setSending"
-      payload: "Start" | "Stop"
-    }
-  | {
-      type: "setReceiverUrl"
+      type: "setVideoDevice"
       payload: string
     }
 
-const initState: State = {
-  devices: [],
-  selectedAudioDevice: "",
-  selectedVideoDevice: "",
-  localPeerId: "",
-  sending: "Start",
-  receiverUrl: "",
-}
-
-const reducer = (state: State, action: Action) => {
+const reducer: React.Reducer<State, Action> = (state, action) => {
   switch (action.type) {
-    case "setLocalStreamId":
-      return {
-        ...state,
-        localStreamId: action.payload,
-      }
-
-    case "setLocalStreamActivity":
-      return {
-        ...state,
-        localStreamActivity: action.payload,
-      }
+    case "setAudioDevice":
+      return { ...state, audioDevice: action.payload }
 
     case "setDevices":
-      return {
-        ...state,
-        devices: action.payload,
-      }
+      return { ...state, devices: action.payload }
 
-    case "setSelectedAudioDevice":
-      return {
-        ...state,
-        selectedAudioDevice: action.payload,
-      }
+    case "setKey":
+      return { ...state, key: action.payload }
 
-    case "setSelectedVideoDevice":
-      return {
-        ...state,
-        selectedVideoDevice: action.payload,
-      }
+    case "setLocalStream":
+      return { ...state, localStream: action.payload }
 
-    case "setLocalPeerId":
-      return {
-        ...state,
-        localPeerId: action.payload,
-      }
+    case "setPeer":
+      return { ...state, peer: action.payload }
 
-    case "setSending":
-      return {
-        ...state,
-        sending: action.payload,
-      }
+    case "setPeerId":
+      return { ...state, peerId: action.payload }
 
-    case "setReceiverUrl":
-      return {
-        ...state,
-        receiverUrl: action.payload,
-      }
+    case "setUrl":
+      return { ...state, url: action.payload }
+
+    case "setVideoDevice":
+      return { ...state, videoDevice: action.payload }
   }
 }
+
+const initState: State = {
+  audioDevice: "",
+  devices: [],
+  key: "",
+  localStream: new MediaStream(),
+  peer: null,
+  peerId: "",
+  url: "",
+  videoDevice: "",
+}
+
+type Ctx = {
+  state: State
+  dispatch: React.Dispatch<Action>
+}
+
+export const MediaSenderContext = createContext<Ctx>({} as Ctx)
 
 const MediaSender: React.VFC = () => {
   const [state, dispatch] = useReducer(reducer, initState)
-  useEffect(() => {
-    navigator.mediaDevices.enumerateDevices().then((devices) => {
-      dispatch({ type: "setDevices", payload: devices })
-    })
-  }, [])
-
-  const changeDevicesOptionHandler = (ev: React.ChangeEvent<HTMLSelectElement>) => {
-    switch (ev.target.name) {
-      case "audioinput":
-        return dispatch({
-          type: "setSelectedAudioDevice",
-          payload: ev.target.options[ev.target.selectedIndex].value,
-        })
-
-      case "videoinput":
-        return dispatch({
-          type: "setSelectedVideoDevice",
-          payload: ev.target.options[ev.target.selectedIndex].value,
-        })
-    }
-  }
-
-  const localStreamRef = useRef<MediaStream>()
-  const localVideoRef = useRef<HTMLVideoElement>(null)
-  const setLocalStream = useCallback(async () => {
-    if (!localVideoRef.current) return
-    const constraints = {
-      audio: state.selectedAudioDevice
-        ? {
-            deviceId: state.selectedAudioDevice,
-          }
-        : false,
-      video: state.selectedVideoDevice
-        ? {
-            deviceId: state.selectedVideoDevice,
-            frameRate: 30,
-            height: 720,
-            width: 1280,
-          }
-        : false,
-    }
-    try {
-      localStreamRef.current = await navigator.mediaDevices.getUserMedia(constraints)
-      localVideoRef.current.srcObject = localStreamRef.current
-      dispatch({ type: "setLocalStreamId", payload: localStreamRef.current.id })
-      dispatch({ type: "setLocalStreamActivity", payload: localStreamRef.current.active })
-    } catch {
-      localStreamRef.current = new MediaStream()
-      localVideoRef.current.srcObject = localStreamRef.current
-      dispatch({ type: "setLocalStreamId", payload: localStreamRef.current.id })
-      dispatch({ type: "setLocalStreamActivity", payload: localStreamRef.current.active })
-    }
-  }, [state.selectedAudioDevice, state.selectedVideoDevice])
-  useEffect(() => {
-    setLocalStream()
-  }, [setLocalStream])
-
-  const clickSendingBtn: React.MouseEventHandler<HTMLButtonElement> = () => {
-    switch (state.sending) {
-      case "Start":
-        dispatch({ type: "setSending", payload: "Stop" })
-        break
-
-      case "Stop":
-        dispatch({ type: "setSending", payload: "Start" })
-        break
-    }
-  }
-
-  const peerRef = useRef<Peer>()
-  const location = useLocation()
-  useEffect(() => {
-    peerRef.current = new Peer(peerConstructor)
-    peerRef.current.on("open", (peerId) => {
-      switch (process.env.NODE_ENV) {
-        case "development":
-          dispatch({
-            type: "setReceiverUrl",
-            payload: `${location.protocol}//${location.host}/receiver/${peerId}`,
-          })
-          break
-
-        case "production":
-          dispatch({
-            type: "setReceiverUrl",
-            payload: `${location.protocol}//${location.host}/ugonf/receiver/${peerId}`,
-          })
-          break
-      }
-      dispatch({ type: "setLocalPeerId", payload: peerId })
-    })
-    peerRef.current.destroy()
-  }, [location.host, location.protocol])
-  useEffect(() => {
-    switch (state.sending) {
-      case "Start":
-        if (!peerRef.current) return
-        peerRef.current.destroy()
-        break
-
-      case "Stop":
-        peerRef.current = new Peer(state.localPeerId, peerConstructor)
-        break
-    }
-    peerRef.current.on("call", (conn) => {
-      conn.answer(localStreamRef.current, answerOption)
-    })
-  }, [state.localPeerId, state.sending])
-  const clickCopyBtn = () => {
-    navigator.clipboard.writeText(state.receiverUrl)
-  }
 
   return (
-    <>
-      <fieldset>
-        <legend>Local Stream</legend>
-        <div>
-          <Video width={1280} height={720} autoPlay muted playsInline ref={localVideoRef} />
-        </div>
-        <hr />
-        <div>
-          <span>ID: </span>
-          <span>{state.localStreamId}</span>
-        </div>
-        <div>
-          <span>Activity: </span>
-          <span>{state.localStreamActivity}</span>
-        </div>
-      </fieldset>
-      <fieldset>
-        <legend>Input</legend>
-        {/* <div>
-          <span>Audio: </span>
-          <select name="audioinput" onChange={changeDevicesOptionHandler}>
-            <option value="">--------------------------------------------------</option>
-            {state.devices
-              .filter((device) => device.kind === "audioinput")
-              .map((device, index) => (
-                <option key={index} value={device.deviceId}>
-                  {device.label}
-                </option>
-              ))}
-          </select>
-        </div> */}
-        <div>
-          <span>Video: </span>
-          <select name="videoinput" onChange={changeDevicesOptionHandler}>
-            <option value="">--------------------------------------------------</option>
-            {state.devices
-              .filter((device) => device.kind === "videoinput")
-              .map((device, index) => (
-                <option key={index} value={device.deviceId}>
-                  {device.label}
-                </option>
-              ))}
-          </select>
-        </div>
-      </fieldset>
-      <fieldset>
-        <legend>Receiver</legend>
-        <div>
-          <span>URL: </span>
-          <span>{state.receiverUrl} </span>
-          <button onClick={clickCopyBtn}>Copy</button>
-        </div>
-        <div>
-          <span>Sending: </span>
-          <button onClick={clickSendingBtn}>{state.sending}</button>
-        </div>
-      </fieldset>
-    </>
+    <MediaSenderContext.Provider value={{ state, dispatch }}>
+      <LocalStream />
+      <Skyway />
+    </MediaSenderContext.Provider>
   )
 }
-
-const Video = styled("video")`
-  background-color: #000;
-`
 
 export default MediaSender
