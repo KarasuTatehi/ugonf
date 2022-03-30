@@ -4,6 +4,14 @@
 
 **ugonf**（ユゴンフ）は、[WebRTC](https://webrtc.org/)を利用した、P2P 方式の映像共有アプリです。
 
+## 重要なお知らせ
+
+`1.2.0` アップデートから、 ugonf の利用には SkyWay の API Key が必要になります。
+API Key の取得および SkyWay アカウントの登録に関して、 ugonf からのサポートは行われません。
+ご了承ください。
+
+SkyWay アカウントの登録は[こちら](https://console-webrtc-free.ecl.ntt.com/users/registration)です。
+
 ## 仕様
 
 ### 共通

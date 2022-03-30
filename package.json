@@ -1,6 +1,6 @@
 {
   "name": "ugonf",
-  "version": "1.1.0",
+  "version": "1.2.0-rc.1",
   "homepage": "https://karasutatehi.github.io/ugonf",
   "scripts": {
     "build": "rm -rf build && react-scripts build",
