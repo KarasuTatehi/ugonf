@@ -13,7 +13,7 @@ const AudioInput: React.VFC<Props> = ({ onChange }) => {
   return (
     <>
       <dt>
-        <label htmlFor="js-LocalStream__AudioInput">Video</label>
+        <label htmlFor="js-LocalStream__AudioInput">Audio</label>
       </dt>
       <dd>
         <select id="js-LocalStream__AudioInput" name="audioinput" onChange={onChange}>
