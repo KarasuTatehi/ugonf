@@ -77,7 +77,7 @@ const Skyway: React.VFC = () => {
           <label htmlFor="js-Skyway__Key">Key</label>
         </dt>
         <dd>
-          <input disabled={peer ? true : false} id="js-Skyway__Key" onChange={changeKey} type="password" />
+          <input disabled={peer ? true : false} id="js-Skyway__Key" onChange={changeKey} type="text" />
         </dd>
         <dt>
           <label htmlFor="js-Skyway__PeerId">Peer ID</label>
