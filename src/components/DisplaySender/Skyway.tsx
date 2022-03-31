@@ -37,13 +37,12 @@ const Skyway: React.VFC = () => {
   }
 
   useEffect(() => {
-    if (!peer) return
+    if (!peer || !localStream) return
     peer.once("open", (peerId) => {
       dispatch({ type: "setPeerId", payload: peerId })
     })
     peer.on("call", (call) => {
       call.answer(localStream)
-      call.once("close", () => {})
     })
     return () => {
       peer.destroy()

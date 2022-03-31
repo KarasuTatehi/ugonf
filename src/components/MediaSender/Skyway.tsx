@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react"
+import { useCallback, useContext, useEffect } from "react"
 import Peer from "skyway-js"
 import { answerOption } from "../../config/skyway"
 import { MediaSenderContext } from "../../pages/MediaSender"
@@ -22,34 +22,19 @@ const Skyway: React.VFC = () => {
       peer.destroy()
       dispatch({ type: "setPeer", payload: null })
     } else {
-      if (!key) return
-      if (peerId) {
-        dispatch({
-          type: "setPeer",
-          payload: new Peer(peerId, { key: key, debug: 3 }),
-        })
-      } else {
-        dispatch({
-          type: "setPeer",
-          payload: new Peer({ key: key, debug: 3 }),
-        })
-      }
+      dispatch({ type: "setPeer", payload: new Peer(peerId, { key: key, debug: 3 }) })
     }
   }
 
   useEffect(() => {
-    if (!peer) return
-    peer.once("open", (peerId) => {
+    if (!peer || !localStream) return
+    peer.on("open", (peerId) => {
       dispatch({ type: "setPeerId", payload: peerId })
     })
     peer.on("call", (call) => {
       call.answer(localStream, answerOption)
-      call.once("close", () => {})
     })
-    return () => {
-      peer.destroy()
-    }
-  }, [localStream, peer])
+  }, [dispatch, localStream, peer])
 
   useEffect(() => {
     switch (process.env.NODE_ENV) {
@@ -65,11 +50,11 @@ const Skyway: React.VFC = () => {
           payload: `${location.protocol}//${location.host}/ugonf/receiver/${key}/${peerId}`,
         })
     }
-  }, [key, peerId])
+  }, [dispatch, key, peerId])
 
-  const clickCopy = () => {
+  const clickCopy = useCallback(() => {
     navigator.clipboard.writeText(`${url}`)
-  }
+  }, [url])
 
   return (
     <fieldset>
@@ -79,7 +64,7 @@ const Skyway: React.VFC = () => {
           <label htmlFor="js-Skyway__Key">Key</label>
         </dt>
         <dd>
-          <input disabled={peer ? true : false} id="js-Skyway__Key" onChange={changeKey} type="password" />
+          <input disabled={peer ? true : false} id="js-Skyway__Key" onChange={changeKey} type="text" />
         </dd>
         <dt>
           <label htmlFor="js-Skyway__PeerId">Peer ID</label>

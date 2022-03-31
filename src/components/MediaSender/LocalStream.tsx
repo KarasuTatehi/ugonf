@@ -9,31 +9,20 @@ const LocalStream: React.VFC = () => {
     dispatch,
   } = useContext(MediaSenderContext)
 
-  const setDevices = useCallback(async () => {
-    try {
-      dispatch({
-        type: "setDevices",
-        payload: await navigator.mediaDevices.enumerateDevices(),
-      })
-    } catch {
-      dispatch({
-        type: "setDevices",
-        payload: [],
-      })
-    }
+  useEffect(() => {
+    navigator.mediaDevices.enumerateDevices().then((devices) => {
+      dispatch({ type: "setDevices", payload: devices })
+    })
   }, [dispatch])
 
-  useEffect(() => {
-    setDevices()
-  }, [setDevices])
-
-  const setLocalStream = useCallback(async () => {
-    const constraints: MediaStreamConstraints = {
-      audio: audioDevice
-        ? {
-            deviceId: audioDevice,
-          }
-        : false,
+  const localStreamConstraints = useCallback(() => {
+    return {
+      audio: false,
+      // audio: audioDevice
+      //   ? {
+      //       deviceId: audioDevice,
+      //     }
+      //   : false,
       video: videoDevice
         ? {
             deviceId: videoDevice,
@@ -43,32 +32,20 @@ const LocalStream: React.VFC = () => {
           }
         : false,
     }
-
-    try {
-      dispatch({
-        type: "setLocalStream",
-        payload: await navigator.mediaDevices.getUserMedia(constraints),
-      })
-    } catch {
-      dispatch({
-        type: "setLocalStream",
-        payload: new MediaStream(),
-      })
-    }
-  }, [audioDevice, dispatch, videoDevice])
+  }, [audioDevice, videoDevice])
 
   useEffect(() => {
-    setLocalStream()
-  }, [setLocalStream])
+    navigator.mediaDevices.getUserMedia(localStreamConstraints()).then((stream) => {
+      dispatch({ type: "setLocalStream", payload: stream })
+    })
+  }, [dispatch, localStreamConstraints])
 
   const videoRef = useRef<HTMLVideoElement>(null)
   useEffect(() => {
     const video = videoRef.current
-    if (!video) return
+    if (!video || !localStream) return
     video.srcObject = localStream
   }, [localStream])
-
-  const { active, id } = localStream
 
   return (
     <fieldset>
@@ -76,12 +53,12 @@ const LocalStream: React.VFC = () => {
       <dl>
         <dt>Preview</dt>
         <dd>
-          <StyledVideo autoPlay height={720} width={1280} ref={videoRef} />
+          <StyledVideo width={1280} height={720} autoPlay muted playsInline ref={videoRef} />
         </dd>
         <dt>ID</dt>
-        <dd>{id}</dd>
+        <dd>{`${localStream?.id}`}</dd>
         <dt>Active</dt>
-        <dd>{`${active}`}</dd>
+        <dd>{`${localStream?.active}`}</dd>
       </dl>
       <Inputs />
     </fieldset>

@@ -5,30 +5,27 @@ import { ReceiverContext } from "../../pages/Receiver"
 
 const Skyway: React.VFC = () => {
   const {
-    state: { key, peer, to },
+    state: {
+      params: { key, to },
+      peer,
+    },
     dispatch,
   } = useContext(ReceiverContext)
 
   useEffect(() => {
     if (!key) return
-    dispatch({
-      type: "setPeer",
-      payload: new Peer({ key: key, debug: 3 }),
-    })
+    dispatch({ type: "setPeer", payload: new Peer({ key, debug: 3 }) })
   }, [dispatch, key])
 
   useEffect(() => {
-    if (!peer || !to) return
+    if (!peer) return
     peer.once("open", () => {
       const call = peer.call(to, undefined, callOption)
-      call.on("stream", (stream) => {
+      call.once("stream", (stream) => {
         dispatch({ type: "setRemoteStream", payload: stream })
       })
     })
-    return () => {
-      peer.destroy()
-    }
-  }, [dispatch, peer, to])
+  }, [dispatch, peer])
 
   return <></>
 }

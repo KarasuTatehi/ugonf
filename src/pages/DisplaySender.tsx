@@ -5,7 +5,7 @@ import Skyway from "../components/DisplaySender/Skyway"
 
 type State = {
   key: string
-  localStream: MediaStream
+  localStream?: MediaStream
   peer: Peer | null
   peerId: string
   url: string
@@ -54,7 +54,6 @@ const reducer: React.Reducer<State, Action> = (state, action) => {
 
 const initState: State = {
   key: "",
-  localStream: new MediaStream(),
   peer: null,
   peerId: "",
   url: "",

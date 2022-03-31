@@ -7,7 +7,7 @@ type State = {
   audioDevice: string
   devices: MediaDeviceInfo[]
   key: string
-  localStream: MediaStream
+  localStream?: MediaStream
   peer: Peer | null
   peerId: string
   url: string
@@ -80,7 +80,6 @@ const initState: State = {
   audioDevice: "",
   devices: [],
   key: "",
-  localStream: new MediaStream(),
   peer: null,
   peerId: "",
   url: "",

@@ -9,28 +9,18 @@ const LocalStream: React.VFC = () => {
     dispatch,
   } = useContext(DisplaySenderContext)
 
-  const setLocalStream = useCallback(async () => {
-    try {
-      dispatch({
-        type: "setLocalStream",
-        payload: await navigator.mediaDevices.getDisplayMedia(displayConstraints),
-      })
-    } catch {
-      dispatch({
-        type: "setLocalStream",
-        payload: new MediaStream(),
-      })
-    }
+  const setLocalStream = useCallback(() => {
+    navigator.mediaDevices.getDisplayMedia(displayConstraints).then((stream) => {
+      dispatch({ type: "setLocalStream", payload: stream })
+    })
   }, [dispatch])
 
   const videoRef = useRef<HTMLVideoElement>(null)
   useEffect(() => {
     const video = videoRef.current
-    if (!video) return
+    if (!video || !localStream) return
     video.srcObject = localStream
   }, [localStream])
-
-  const { active, id } = localStream
 
   return (
     <fieldset>
@@ -38,12 +28,12 @@ const LocalStream: React.VFC = () => {
       <dl>
         <dt>Preview</dt>
         <dd>
-          <StyledVideo autoPlay height={720} width={1280} ref={videoRef} />
+          <StyledVideo width={1280} height={720} autoPlay muted playsInline ref={videoRef} />
         </dd>
         <dt>ID</dt>
-        <dd>{id}</dd>
+        <dd>{`${localStream?.id}`}</dd>
         <dt>Active</dt>
-        <dd>{`${active}`}</dd>
+        <dd>{`${localStream?.active}`}</dd>
         <dt>
           <label htmlFor="js-LocalStream__Input">Input</label>
         </dt>
