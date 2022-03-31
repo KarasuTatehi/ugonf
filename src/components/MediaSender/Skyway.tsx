@@ -56,13 +56,13 @@ const Skyway: React.VFC = () => {
       case "development":
         return dispatch({
           type: "setUrl",
-          payload: `${location.protocol}//${location.host}/receiver/${peerId}/${key}`,
+          payload: `${location.protocol}//${location.host}/receiver/${key}/${peerId}`,
         })
 
       case "production":
         return dispatch({
           type: "setUrl",
-          payload: `${location.protocol}//${location.host}/ugonf/receiver/${peerId}/${key}`,
+          payload: `${location.protocol}//${location.host}/ugonf/receiver/${key}/${peerId}`,
         })
     }
   }, [key, peerId])
@@ -89,9 +89,7 @@ const Skyway: React.VFC = () => {
         </dd>
         <dt>Peer</dt>
         <dd>
-          <button disabled={peer ? true : false} onClick={clickPeerSwitch}>
-            Switch
-          </button>
+          <button onClick={clickPeerSwitch}>Switch</button>
           {` => ${peer ? "Open" : "Close"}`}
         </dd>
         <dt>URL</dt>

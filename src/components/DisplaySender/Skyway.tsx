@@ -88,9 +88,7 @@ const Skyway: React.VFC = () => {
         </dd>
         <dt>Peer</dt>
         <dd>
-          <button disabled={peer ? true : false} onClick={clickPeerSwitch}>
-            Switch
-          </button>
+          <button onClick={clickPeerSwitch}>Switch</button>
           {` => ${peer ? "Open" : "Close"}`}
         </dd>
         <dt>URL</dt>
