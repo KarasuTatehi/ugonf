@@ -1,0 +1,9 @@
+html {
+  overflow-x: hidden;
+}
+
+button,
+input {
+  min-width: 200px;
+  max-width: 400px;
+}

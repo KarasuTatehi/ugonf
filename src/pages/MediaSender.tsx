@@ -4,21 +4,14 @@ import LocalStream from "../components/MediaSender/LocalStream"
 import Skyway from "../components/MediaSender/Skyway"
 
 type State = {
-  audioDevice: string
   devices: MediaDeviceInfo[]
   key: string
   localStream?: MediaStream
   peer: Peer | null
   peerId: string
-  url: string
-  videoDevice: string
 }
 
 type Action =
-  | {
-      type: "setAudioDevice"
-      payload: string
-    }
   | {
       type: "setDevices"
       payload: MediaDeviceInfo[]
@@ -39,20 +32,9 @@ type Action =
       type: "setPeerId"
       payload: string
     }
-  | {
-      type: "setUrl"
-      payload: string
-    }
-  | {
-      type: "setVideoDevice"
-      payload: string
-    }
 
 const reducer: React.Reducer<State, Action> = (state, action) => {
   switch (action.type) {
-    case "setAudioDevice":
-      return { ...state, audioDevice: action.payload }
-
     case "setDevices":
       return { ...state, devices: action.payload }
 
@@ -67,23 +49,14 @@ const reducer: React.Reducer<State, Action> = (state, action) => {
 
     case "setPeerId":
       return { ...state, peerId: action.payload }
-
-    case "setUrl":
-      return { ...state, url: action.payload }
-
-    case "setVideoDevice":
-      return { ...state, videoDevice: action.payload }
   }
 }
 
 const initState: State = {
-  audioDevice: "",
   devices: [],
   key: "",
   peer: null,
   peerId: "",
-  url: "",
-  videoDevice: "",
 }
 
 type Ctx = {

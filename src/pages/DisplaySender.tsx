@@ -8,7 +8,6 @@ type State = {
   localStream?: MediaStream
   peer: Peer | null
   peerId: string
-  url: string
 }
 
 type Action =
@@ -28,10 +27,6 @@ type Action =
       type: "setPeerId"
       payload: string
     }
-  | {
-      type: "setUrl"
-      payload: string
-    }
 
 const reducer: React.Reducer<State, Action> = (state, action) => {
   switch (action.type) {
@@ -46,9 +41,6 @@ const reducer: React.Reducer<State, Action> = (state, action) => {
 
     case "setPeerId":
       return { ...state, peerId: action.payload }
-
-    case "setUrl":
-      return { ...state, url: action.payload }
   }
 }
 
@@ -56,7 +48,6 @@ const initState: State = {
   key: "",
   peer: null,
   peerId: "",
-  url: "",
 }
 
 type Ctx = {

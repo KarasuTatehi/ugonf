@@ -1,6 +1,6 @@
 import styled from "@emotion/styled"
 import { useCallback, useContext, useEffect, useRef } from "react"
-import { displayConstraints } from "../../config/local-stream"
+import { setMediaStream } from "../../functions/setMediaStream"
 import { DisplaySenderContext } from "../../pages/DisplaySender"
 
 const LocalStream: React.VFC = () => {
@@ -9,13 +9,13 @@ const LocalStream: React.VFC = () => {
     dispatch,
   } = useContext(DisplaySenderContext)
 
-  const setLocalStream = useCallback(() => {
-    navigator.mediaDevices.getDisplayMedia(displayConstraints).then((stream) => {
-      dispatch({ type: "setLocalStream", payload: stream })
-    })
-  }, [dispatch])
+  const setLocalStream = useCallback(async () => {
+    const stream = await setMediaStream("display")
+    dispatch({ type: "setLocalStream", payload: stream })
+  }, [])
 
   const videoRef = useRef<HTMLVideoElement>(null)
+
   useEffect(() => {
     const video = videoRef.current
     if (!video || !localStream) return
@@ -24,28 +24,29 @@ const LocalStream: React.VFC = () => {
 
   return (
     <fieldset>
-      <legend>Local Stream</legend>
-      <dl>
-        <dt>Preview</dt>
-        <dd>
-          <StyledVideo width={1280} height={720} autoPlay muted playsInline ref={videoRef} />
-        </dd>
-        <dt>ID</dt>
-        <dd>{`${localStream?.id}`}</dd>
-        <dt>Active</dt>
-        <dd>{`${localStream?.active}`}</dd>
-        <dt>
-          <label htmlFor="js-LocalStream__Input">Input</label>
-        </dt>
-        <dd>
-          <button id="js-LocalStream__Input" onClick={setLocalStream}>
-            Select
-          </button>
-        </dd>
-      </dl>
+      <div>プレビュー</div>
+      <div>
+        <StyledVideoOuter style={{ borderColor: `${localStream?.active ? "red" : "gray"}` }}>
+          <StyledVideo width={896} height={504} autoPlay muted playsInline ref={videoRef} />
+        </StyledVideoOuter>
+      </div>
+      <div>
+        <label htmlFor="js-LocalStream__Input">画面ソース</label>
+      </div>
+      <div>
+        <button id="js-LocalStream__Input" onClick={setLocalStream}>
+          選択
+        </button>
+      </div>
     </fieldset>
   )
 }
+
+const StyledVideoOuter = styled("div")`
+  display: inline-block;
+  border-style: solid;
+  border-width: 2px;
+`
 
 const StyledVideo = styled("video")`
   background-color: #000;

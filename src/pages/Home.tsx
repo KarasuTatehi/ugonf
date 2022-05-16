@@ -7,15 +7,19 @@ const Home: React.VFC = () => {
   }, [])
 
   return (
-    <>
-      <span>Sending Type: </span>
-      <Link to="/sender/media">
-        <button>Media</button>
-      </Link>
-      <Link to="/sender/display">
-        <button>Display</button>
-      </Link>
-    </>
+    <fieldset>
+      <legend>送信ソース</legend>
+      <div>
+        <Link to="/sender/media">
+          <button>カメラ</button>
+        </Link>
+      </div>
+      <div>
+        <Link to="/sender/display">
+          <button>画面</button>
+        </Link>
+      </div>
+    </fieldset>
   )
 }
 

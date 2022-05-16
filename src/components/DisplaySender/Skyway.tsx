@@ -1,10 +1,12 @@
+import styled from "@emotion/styled"
 import { useContext, useEffect } from "react"
 import Peer from "skyway-js"
 import { DisplaySenderContext } from "../../pages/DisplaySender"
+import { Row } from "../../styles/layout"
 
 const Skyway: React.VFC = () => {
   const {
-    state: { key, localStream, peer, peerId, url },
+    state: { key, localStream, peer, peerId },
     dispatch,
   } = useContext(DisplaySenderContext)
 
@@ -21,18 +23,23 @@ const Skyway: React.VFC = () => {
       peer.destroy()
       dispatch({ type: "setPeer", payload: null })
     } else {
-      if (!key) return
-      if (peerId) {
-        dispatch({
-          type: "setPeer",
-          payload: new Peer(peerId, { key: key, debug: 3 }),
-        })
-      } else {
-        dispatch({
-          type: "setPeer",
-          payload: new Peer({ key: key, debug: 3 }),
-        })
+      dispatch({ type: "setPeer", payload: new Peer(peerId, { key: key, debug: 3 }) })
+
+      switch (process.env.NODE_ENV) {
+        case "development":
+          navigator.clipboard.writeText(`${location.protocol}//${location.host}/receiver/${key}/${peerId}`)
+          break
+
+        case "production":
+          navigator.clipboard.writeText(`${location.protocol}//${location.host}/ugonf/receiver/${key}/${peerId}`)
+          break
       }
+
+      alert(`
+        ブラウザソース用リンクをクリップボードにコピーしました
+        使用している配信ツールにブラウザソースとして貼り付けてください
+        「OK」を押すと映像共有を開始します
+      `)
     }
   }
 
@@ -49,53 +56,45 @@ const Skyway: React.VFC = () => {
     }
   }, [localStream, peer])
 
-  useEffect(() => {
-    switch (process.env.NODE_ENV) {
-      case "development":
-        return dispatch({
-          type: "setUrl",
-          payload: `${location.protocol}//${location.host}/receiver/${key}/${peerId}`,
-        })
-
-      case "production":
-        return dispatch({
-          type: "setUrl",
-          payload: `${location.protocol}//${location.host}/ugonf/receiver/${key}/${peerId}`,
-        })
-    }
-  }, [key, peerId])
-
-  const clickCopy = () => {
-    navigator.clipboard.writeText(`${url}`)
-  }
-
   return (
     <fieldset>
       <legend>SkyWay</legend>
-      <dl>
-        <dt>
-          <label htmlFor="js-Skyway__Key">Key</label>
-        </dt>
-        <dd>
-          <input disabled={peer ? true : false} id="js-Skyway__Key" onChange={changeKey} type="text" />
-        </dd>
-        <dt>
-          <label htmlFor="js-Skyway__PeerId">Peer ID</label>
-        </dt>
-        <dd>
-          <input disabled={peer ? true : false} id="js-Skyway__PeerId" onChange={changePeerId} type="text" />
-        </dd>
-        <dt>Peer</dt>
-        <dd>
-          <button onClick={clickPeerSwitch}>Switch</button>
-          {` => ${peer ? "Open" : "Close"}`}
-        </dd>
-        <dt>URL</dt>
-        <dd>
-          <button onClick={clickCopy}>Copy</button>
-          {` => ${url}`}
-        </dd>
-      </dl>
+      <Row>
+        <div>
+          <input
+            disabled={peer ? true : false}
+            id="js-Skyway__Key"
+            onChange={changeKey}
+            placeholder="APIキー"
+            type="text"
+          />
+        </div>
+        <div>
+          <span>映像受信側から提供されたSkyWayのAPIキーを入力してください</span>
+        </div>
+      </Row>
+      <Row>
+        <div>
+          <input
+            disabled={peer ? true : false}
+            id="js-Skyway__PeerId"
+            onChange={changePeerId}
+            placeholder="ニックネーム"
+            type="text"
+          />
+        </div>
+        <div>
+          <span>ニックネームは毎回同じものにしてください</span>
+        </div>
+      </Row>
+      <Row>
+        <div>
+          <button onClick={clickPeerSwitch}>{`${peer ? "停止" : "送信"}`}</button>
+        </div>
+        <div>
+          <span>クリック時にブラウザソース用リンクをクリップボードにコピーします</span>
+        </div>
+      </Row>
     </fieldset>
   )
 }
