@@ -24,7 +24,9 @@
     ]
   },
   "resolutions": {
-    "css-select": "^4.3.0"
+    "async": "^2.6.4",
+    "css-select": "^4.3.0",
+    "ejs": "^3.1.7"
   },
   "dependencies": {
     "@emotion/react": "^11.8.1",
