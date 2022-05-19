@@ -77,7 +77,8 @@ const Skyway: React.VFC = () => {
             disabled={peer ? true : false}
             id="js-Skyway__PeerId"
             onChange={changePeerId}
-            placeholder="ニックネーム"
+            pattern="^[0-9A-Za-z]+$"
+            placeholder="ニックネーム（半角英数字）"
             type="text"
           />
         </div>
