@@ -2,8 +2,6 @@
 
 ![ugonf](./public/thumbnail.png)
 
-**ugonf**（ユゴンフ）は、[WebRTC](https://webrtc.org/)を利用した、P2P 方式の映像共有アプリです。
-
 ## 重要なお知らせ
 
 > `1.3.0-rc.1` アップデートから、音声機能が廃止されました。
@@ -15,6 +13,46 @@
 > ご了承ください。
 >
 > SkyWay アカウントの登録は[こちら](https://console-webrtc-free.ecl.ntt.com/users/registration)です。
+
+----
+
+<table style="text-align: center">
+  <thead>
+    <tr>
+      <th >ダイレクトアクセス</th>
+      <td>
+        各種ソースの設定画面に直接ジャンプします
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>
+        <a href="https://karasutatehi.github.io/ugonf/sender/media">
+          カメラ
+        </a>
+      </th>
+      <td>
+        WebカメラやVtubeStudioなどの（仮想）カメラ
+      </td>
+    </tr>
+    <tr>
+      <th>
+        <a href="https://karasutatehi.github.io/ugonf/sender/display">
+          画面
+        </a>
+      </th>
+      <td>
+        モニター映像、ウィンドウ、ブラウザタブなど
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+---
+
+**ugonf**（ユゴンフ）は、[WebRTC](https://webrtc.org/)を利用した、P2P 方式の映像共有アプリです。
 
 ## 仕様
 
@@ -45,7 +83,7 @@
 
 ## 使い方
 
-### 映像送信側 ()
+### 映像送信側
 
 1. 「[https://karasutatehi.github.io/ugonf/](https://karasutatehi.github.io/ugonf/)」にアクセスします
 2. ブラウザがデバイスの使用許諾を求めてくるので、承諾します
