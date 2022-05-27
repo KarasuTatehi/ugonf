@@ -10,6 +10,21 @@ const Skyway: React.VFC = () => {
     dispatch,
   } = useContext(DisplaySenderContext)
 
+  const validator = (state: string) => {
+    const reg = new RegExp(/^[a-zA-Z0-9!-]+$/)
+    const check = state === "" || reg.test(state)
+
+    if (!check) {
+      return (
+        <div>
+          <span>
+            <strong style={{ color: "red" }}>半角英数字と半角ハイフンのみ使用可能です</strong>
+          </span>
+        </div>
+      )
+    }
+  }
+
   const changeKey: React.ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
     dispatch({ type: "setKey", payload: value })
   }
@@ -35,11 +50,9 @@ const Skyway: React.VFC = () => {
           break
       }
 
-      alert(`
-        ブラウザソース用リンクをクリップボードにコピーしました
-        使用している配信ツールにブラウザソースとして貼り付けてください
-        「OK」を押すと映像共有を開始します
-      `)
+      alert(
+        "ブラウザソース用リンクをクリップボードにコピーしました\n使用している配信ツールにブラウザソースとして貼り付けてください\n「OK」を押すと映像共有を開始します\n"
+      )
     }
   }
 
@@ -69,6 +82,7 @@ const Skyway: React.VFC = () => {
             type="text"
           />
         </div>
+        {validator(key)}
         <div>
           <span>映像受信側から提供されたSkyWayのAPIキーを入力してください</span>
         </div>
@@ -79,11 +93,11 @@ const Skyway: React.VFC = () => {
             disabled={peer ? true : false}
             id="js-Skyway__PeerId"
             onChange={changePeerId}
-            pattern="^[0-9A-Za-z]+$"
-            placeholder="ニックネーム（半角英数字）"
+            placeholder="ニックネーム"
             type="text"
           />
         </div>
+        {validator(peerId)}
         <div>
           <span>ニックネームは毎回同じものにしてください</span>
         </div>
